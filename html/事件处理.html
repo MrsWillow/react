@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>事件处理</title>
+</head>
+<body>
+  <div id="test"></div>
+
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <script src="../js/babel.min.js"></script>
+
+  <script type="text/babel">
+    class Demo extends React.Component {
+      /*
+        (1). 通过onXxx属性指定事件处理函数(注意大小写)
+          a. React使用的是自定义(合成)时间，而不是原生DOM事件 -- 为了更好地兼容性
+          b. React中的事件是通过事件委托方式处理的(委托给组件最外层的元素)
+        (2) 通过event.traget得到发生事件的DOM元素对象
+      */
+      
+      myRef = React.createRef()
+      render() {
+        return (
+          <div>
+            <input ref={ this.myRef } type="text" placeholder="点击提示数据"/>&nbsp;
+            <button onClick={ this.showData1 }>点我提示左侧数据</button>&nbsp; 
+          </div>
+        )
+      }
+
+      showData1 = () => {
+        console.log(this.myRef.current.value);
+        alert(this.myRef.current.value)
+      }
+
+    }
+    ReactDOM.render(<Demo/>,document.getElementById('test'))
+  </script>
+</body>
+</html>

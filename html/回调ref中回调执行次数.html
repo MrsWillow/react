@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>回调ref中回调执行次数</title>
+</head>
+<body>
+  <div id="test"></div>
+
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <script src="../js/babel.min.js"></script>
+  <script type="text/babel">
+    class Demo extends React.Component {
+      state = {
+        isHot: false
+      }
+      render() {
+        let { isHot } = this.state
+        return (
+          <div>
+            <h2>今天天气很{ isHot ? '炎热' : '凉爽'}</h2>
+            <input ref={ this.saveInput } type="text" placeholder="点击按钮提示数据"/>&nbsp;
+            <button onClick={ this.showData1 }>点我提示左侧数据</button>&nbsp; 
+            <button onClick={ this.changeWeather }>点击改变天气</button>&nbsp;
+          </div>
+        )
+      }
+      saveInput = (c) => {
+        this.input1 = c
+        console.log('@');
+      }
+
+      showData1 = () => {
+        let { input1 } = this
+        alert(input1.value )
+      }
+
+      changeWeather = () => {
+        let { isHot } = this.state
+        this.setState({ isHot : !isHot })
+      }
+    }
+    ReactDOM.render(<Demo/>,document.getElementById('test'))
+  </script>
+</body>
+</html>
