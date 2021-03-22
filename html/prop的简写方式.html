@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>prop的简写方式</title>
+</head>
+<body>
+  <div id="text"></div>
+
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <script src="../js/babel.min.js"></script>
+
+  <!-- 引入prop-types 用于对组件标签属性进行限制 -->
+  <script src="../js/prop-types.js"></script>
+  
+  <script type="text/babel">
+    class Person extends React.Component {
+      // 构造器是否接收props，是否传递给super，取决于
+      // 是否希望在构造器中通过this访问props
+      // 开发中基本不写构造器
+      constructor(props) {
+        console.log(props);
+        super(props)
+      }
+
+      static propTypes = {
+        name: PropTypes.string.isRequired,
+        sex: PropTypes.string,
+        age: PropTypes.number
+      }
+   
+      static defaultProps = {
+        sex: '男'
+      }
+      render() {
+        let { name,age, sex } = this.props
+        return (
+          <ul>
+            <li>姓名：{ name }</li>
+            <li>年龄：{ age }</li>
+            <li>性别：{ sex }</li>
+          </ul>
+        )
+      }
+    }
+    
+    
+    ReactDOM.render(<Person name='jerry' age={18} />,document.getElementById('text'))
+  
+  </script>
+</body>
+</html>

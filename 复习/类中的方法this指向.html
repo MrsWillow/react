@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>类中方法的this指向</title>
+</head>
+<body>
+  <script>
+    class Person{
+      constructor(name,age) {
+        this.name = name
+        this.age = age
+      }
+      //  speak放在类的原型对象，供实例使用
+      //  p1实例调用speak，speak中的this就是p1实例 
+      //  类中的方法开启了局部严格模式，this不会指向window
+      speak() {
+        console.log(this);
+      }
+    }
+    const p1 = new Person('Tom',18)
+    p1.speak()  // 通过实例调用speak方法
+
+    const x = p1.speak   // 实例没有调用方法，只是把该方法赋给x
+    x()
+
+    function demo() {
+      console.log(this);
+    }
+    demo()
+    const h = demo.bind({ a: 1,b: 2})
+    h()
+  </script>
+</body>
+</html>

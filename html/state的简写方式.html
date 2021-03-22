@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>state的简写方式</title>
+</head>
+<body>
+  <div id="text"></div>
+
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <script src="../js/babel.min.js"></script>
+  
+  <script type="text/babel">
+    class Weather extends React.Component{
+   
+      state = { isHot: true  }
+
+      render() {
+        let { isHot } = this.state
+        return <h2 onClick={ this.changeWeather }>天气{ isHot ? '炎热': '凉爽'}</h2>
+      }
+      
+      // 箭头函数没有this 去外层找this
+      // 自定义方法--要用赋值语句的形式+箭头函数
+      changeWeather = () => {
+        let hot = this.state.isHot
+        this.setState({ isHot: !hot })
+      }
+    }
+    
+    ReactDOM.render(<Weather/>,document.getElementById('text'))
+  </script>
+</body>
+</html>
