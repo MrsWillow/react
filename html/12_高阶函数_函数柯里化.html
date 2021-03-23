@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>高阶函数_函数柯里化</title>
+</head>
+<body>
+  <div id="test"></div>
+
+  <script src="../js/react.development.js"></script>
+  <script src="../js/react-dom.development.js"></script>
+  <script src="../js/babel.min.js"></script>
+  <script type="text/babel">
+    // 页面中输入类dom 随着输入可以维护到状态中去 ,需要用到时候从状态中取
+    //#region
+      /*
+          高阶函数： 符合一下任何一个：
+              1. A函数  接收的参数是一个函数   可以称A为高阶函数
+              2. A函数  调用的返回值依然是一个函数  A为高阶
+              常见的高阶函数 ：Promise、setTimeout、arr.map()等
+
+          函数的柯里化：通过函数调用继续返回函数的形式，实现多次接收参
+                      数最后统一处理的函数编码形式
+
+      */
+    // #endregion
+    class Login extends React.Component {
+      state = {
+        username: '',
+        password: ''
+      }
+      render() {
+        return (
+            <div>
+              {/*  把 saveFormData 的返回值作为 onChange 的回调  */}
+              {/*
+                <form onSubmit={this.handleSubmit}>
+                  name: <input onChange={this.saveFormData1('username')} type='text' name='username'/><br/>
+                  password: <input onChange={this.saveFormData1('password')} type='password' name='password'/><br/>
+                  <button>login</button>
+                </form>
+              */}
+
+              <form onSubmit={this.handleSubmit}>
+                name: <input onChange={ event => this.saveFormData2('username',event) } type='text' name='username'/><br/>
+                password: <input onChange={ event => this.saveFormData2('password',event) } type='password' name='password'/><br/>
+                <button>login</button>
+              </form>
+            </div>
+
+        )
+      }
+      handleSubmit = (event) => {
+        // 阻止表单默认提交事件
+        event.preventDefault()
+        let { username,password } = this.state
+        alert(`用户名${ username},密码${ password}`)
+      }
+
+      // 函数的柯里化
+      saveFormData1 = (dataType) => {
+        return (event) => {
+          console.log(dataType,event.target.value)
+          this.setState({ [dataType] : event.target.value })
+        }
+      }
+      // 不用柯里化
+      saveFormData2 = (dataType,event) => {
+        this.setState({ [dataType] : event.target.value })
+      }
+    }
+    ReactDOM.render(<Login/>,document.getElementById('test'))
+  </script>
+</body>
+</html>
