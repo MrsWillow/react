@@ -24,9 +24,15 @@
 
     static getDerivedStateFromProps(prop) {
       console.log('Count-getDerivedStateFromProps',prop)
-      // return null
-      return { count: 109}
+      return null
+      // return { count: 109}
       // 适用于 state的值取决于prop
+      // 若state的值在任何时候都取决于props  那么可以使用
+    }
+
+    getSnapshotBeforeUpdate() {
+      console.log('Count-getSnapshotBeforeUpdate')
+      return 'hhhhhh'
     }
     componentDidMount() {
       console.log('Count-componentDidMount')
@@ -42,8 +48,8 @@
     }
 
     // 更新完毕
-    componentDidUpdate() {
-      console.log('Count-componentDidUpdate')
+    componentDidUpdate(preProps,preState,snapshotValue) {
+      console.log('Count-componentDidUpdate',preProps,preState,snapshotValue)
       return true
     }
     render() {
