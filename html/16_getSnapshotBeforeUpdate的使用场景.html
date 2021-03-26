@@ -23,16 +23,34 @@
   <script src="../js/babel.min.js"></script>
   <script type="text/babel">
     class NewsList extends React.Component {
+      state = {
+        newsArr: []
+      }
+      componentDidMount() {
+        setInterval(() => {
+          let { newsArr } = this.state
+          let news = '新闻' + (newsArr.length + 1)
+          this.setState({
+            newsArr: [news,...newsArr]
+          })
+        },1000)
+      }
+
+      getSnapshotBeforeUpdate() {
+        // return 的值作为参数给componentDidUpdate 的 snapshotValue
+        return this.refs.list.scrollHeight
+      }
+      componentDidUpdate(preProps,preState,snapshotValue) {
+        this.refs.list.scrollTop += this.refs.list.scrollHeight - snapshotValue
+      }
       render() {
         return (
-          <div className="list">
-            <div className="news">新闻7</div>
-            <div className="news">新闻6</div>
-            <div className="news">新闻5</div>
-            <div className="news">新闻4</div>
-            <div className="news">新闻3</div>
-            <div className="news">新闻2</div>
-            <div className="news">新闻1</div>
+          <div className="list" ref="list">
+            {
+              this.state.newsArr.map((item,index) => {
+                return <div className="news" key={ index }>{ item }</div>
+              })
+            }
           </div>
         )
       }
