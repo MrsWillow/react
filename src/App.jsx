@@ -22,7 +22,7 @@ export default class App extends Component {
 					<List todos = { todos }
 								updateTodo = { this.updateTodo }
 								deleteTodo = { this.deleteTodo }/>
-					<Footer todos = { todos } checkAllTodo={ this.checkAllTodo }/>
+					<Footer todos = { todos } checkAllTodo={ this.checkAllTodo } clearAllDone = { this.clearAllDone }/>
 				</div>
 			</div>
 		)
@@ -60,4 +60,11 @@ export default class App extends Component {
 		})
 		this.setState({ todos: newTodos})
 	}
+	clearAllDone = () => {
+    let { todos } = this.state
+    let newTodos = todos.filter(item => {
+      return item.done === false
+    })
+    this.setState({ todos: newTodos})
+  }
 }

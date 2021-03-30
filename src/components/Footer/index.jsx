@@ -14,16 +14,20 @@ export default class Footer extends Component {
 		return (
 			<div className="todo-footer">
 				<label>
-					<input type="checkbox" onChange={ this.handleCheckAll } checked={ doneCount === total ? true : false }/>
+					<input type="checkbox" onChange={ this.handleCheckAll }
+                 checked={ doneCount === total && total !== 0 ? true : false }/>
 				</label>
 				<span>
 					<span>已完成{ doneCount }</span> / 全部{ total }
 				</span>
-				<button className="btn btn-danger">清除已完成任务</button>
+				<button onClick={ this.handleClearAllDone } className="btn btn-danger">清除已完成任务</button>
 			</div>
 		)
 	}
-	handleCheckAll = () => {
-		this.props.checkAllTodo()
+	handleCheckAll = (event) => {
+		this.props.checkAllTodo(event.target.checked)
 	}
+  handleClearAllDone= () => {
+    this.props.clearAllDone()
+  }
 }
